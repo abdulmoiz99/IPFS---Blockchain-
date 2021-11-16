@@ -13,7 +13,9 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Dapp University
+          
+           Meme of the day
+          
           </a>
         </nav>
         <div className="container-fluid mt-5">
