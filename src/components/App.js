@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import logo from '../logo.png'
 import './App.css'
-import { create } from 'ipfs-http-client'
 
-
-const ipfs = create('https://mainnet.infura.io/v3/5680b098f95145999b986f9fffd90444:5001') // (the default in Node.js)
+import { create } from 'ipfs-http-client';
+const ipfs = create({
+  host: 'ipfs.infura.io',
+  port: 5001, 
+  protocol: 'https'
+});
 
 
 class App extends Component {
@@ -12,6 +15,7 @@ class App extends Component {
     super(props)
     this.state = {
       buffer: null,
+      memeHash:"QmQa7F2AczhDQTMKvz5uAEawDx65EZFnwW2RhA2mbHvTx9",
     }
   }
 
@@ -28,24 +32,18 @@ class App extends Component {
 
     console.log(reader)
   }
-  onSubmit = (event) => {
-    event.preventDefault()
-    ipfs.add(this.state.buffer, (error, result) => {
-      //do stuff here
-      console.log('ipfs-results',result);
-      if(error){
-        console.log(error);
-        return;
-      }
-    });
-   }
 
-  // onSubmit = async (event) => {
-  //   event.preventDefault()
-  //   console.log("submitting..")
-  //   const result = await ipfs.add(this.state.buffer)
-  //   console.log("ipfs", result)
-  // }
+
+
+
+  onSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Submitting the form...");
+    const result  =await ipfs.add(this.state.buffer); 
+    console.log('IPFS result', result.path);
+    const memeHash = result.path;
+    this.setState({memeHash}); 
+}
 
   render() {
     return (
@@ -69,25 +67,19 @@ class App extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img src={`https://ipfs.infura.io/ipfs/${this.state.memeHash}`} className="App-logo" alt="logo" />
                 </a>
-                <h1>Dapp University Starter Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
+             
                 <a
                   className="App-link"
                   href="http://www.dappuniversity.com/bootcamp"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  LEARN BLOCKCHAIN{' '}
-                  <u>
-                    <b>NOW! </b>
-                  </u>
+                 
                 </a>
                 <p>&nbsp;</p>
-                <h2>Change name </h2>
+                <h2>Meme </h2>
                 <form onSubmit={this.onSubmit}>
                   <input type="file" onChange={this.captureFile}></input>
                   <input type="submit"></input>
