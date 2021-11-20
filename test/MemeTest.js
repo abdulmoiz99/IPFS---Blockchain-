@@ -1,23 +1,7 @@
-// const Meme = artifacts.require('./Meme.sol')
+var Meme = artifacts.require("./Meme.sol");
 
 import { assert } from "chai";
 
-// //require('chai').use(require('chai-as-promised')).should()
-
-// contract('Meme', (account) => {
-//   let meme
-
-//   describle('deployment', async () => {
-//     it('deployed succesfully', async () => {
-//       meme = await Meme.deployed()
-//       const address = meme.address
-//       console.log(address)
-//     })
-//   })
-// })
-
-
-var Meme = artifacts.require("./Meme.sol");
 
 contract("Meme", function(accounts) {
 
